@@ -233,7 +233,7 @@ class MusicReader implements Runnable
 					while ((nBytesRead = mStreamer.din.read(data, 0, data.length)) != -1) {
 						preBufferedMusicData.queueData(data);
 						line.write(data, 0, musicReadSize);
-						TimeUnit.MILLISECONDS.sleep(1);
+						TimeUnit.MILLISECONDS.sleep(Global.MUSIC_READ_DELAY);
 						data = null;
 						data = new byte[musicReadSize];
 						nBytesReadTotal += nBytesRead;
