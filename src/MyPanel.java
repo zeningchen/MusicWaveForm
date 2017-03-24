@@ -60,12 +60,10 @@ class MyPanel extends JPanel implements Runnable
 			if(mReader.getPlayBack())
 			{
 				repaint();
-
 			}
             try { 
                 Thread.sleep(Global.TIME_TICK);
             } catch (InterruptedException ex) {
-                
                 Logger.getLogger(this.getName()).log(Level.SEVERE, 
                     null, ex);
             }

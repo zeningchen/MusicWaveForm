@@ -6,7 +6,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-/*Class is like a queue*/
+/*Threadsafe Queue for buffering/debuffering sound samples*/
 class DynamicMusicQueue
 {
 	/*Main storage structure*/
@@ -38,9 +38,13 @@ class DynamicMusicQueue
 		return mData;
 	}
 	
+	/*Returns buffer size*/
 	public int size()
 	{
-		return dynBuf.size();
+		synchronized(dynBuf)
+		{
+			return dynBuf.size();
+		}
 	}
 	
 	public byte[] get(int i)
@@ -152,7 +156,7 @@ class MusicReader implements Runnable
 		System.out.println("Time take to preBuffer = " + (System.nanoTime() - lastMeasTime));
 	}
 	
-	/*Buffers music*/
+	/*Debug method that prebuffers whole song and plays it*/
 	private void bufferMusic()
 	{
 		long lastMeasTime = System.nanoTime();
@@ -196,25 +200,21 @@ class MusicReader implements Runnable
 		System.out.println("Time take to Buffer = " + (System.nanoTime() - lastMeasTime));
 	}
 	
+	/*Method that dynamically buffers music to be displayed*/
 	private void playPreBufferedMusic()
 	{
-		try
-		{
-			if(mStreamer.din != null) 
-			{	
+		try {
+			if(mStreamer.din != null) {	
 				SourceDataLine line = null;
-				if(mStreamer.info != null)
-				{
+				if(mStreamer.info != null) {
 					line = (SourceDataLine) AudioSystem.getLine(mStreamer.info);
 				}
-				
 				if(line != null) {
 					line.open(mStreamer.decodedFormat);
 					
 					
 					/*Flush Buffer*/
-					for(int i = 0; i < preBufferedMusicData.size(); i++)
-					{
+					for(int i = 0; i < preBufferedMusicData.size(); i++) {
 						line.write(preBufferedMusicData.get(i), 0, musicReadSize);
 					}
 					
@@ -239,6 +239,7 @@ class MusicReader implements Runnable
 						nBytesReadTotal += nBytesRead;
 					}
 					
+					while(preBufferedMusicData.size() > 0);
 					setPlayBack(false);
 					
 					// Stop
@@ -253,12 +254,10 @@ class MusicReader implements Runnable
 		}
 		finally {
 			if(mStreamer.din != null) {
-				try 
-				{ 
+				try { 
 					mStreamer.din.close(); 
 				} 
-				catch(IOException e) 
-				{ 
+				catch(IOException e) { 
 					e.printStackTrace(); 
 				}
 			}
@@ -266,12 +265,9 @@ class MusicReader implements Runnable
 	}
 	
 	/*Plays music from the buffer*/
-	private void playMusic()
+	private void playMusic() 
 	{
-		
-		try
-		{
-			
+		try {
 			SourceDataLine line = null;
 			if(mStreamer.info != null)
 			{
@@ -286,8 +282,7 @@ class MusicReader implements Runnable
 				
 				/*Flush Buffer*/
 				setPlayBack(true);
-				for(int i = 0; i < bufferedMusicData.size(); i++)
-				{
+				for(int i = 0; i < bufferedMusicData.size(); i++) {
 					//ByteBuffer.wrap(bufferedMusicData.get(i)).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(bufferedMusicData16bit);
 					line.write(bufferedMusicData.get(i), 0, musicReadSize);
 				}
@@ -411,9 +406,6 @@ class MusicReader implements Runnable
 		{
 			preBufferMusic();
 		}
-		
-		
-
 	}
 
 	@Override

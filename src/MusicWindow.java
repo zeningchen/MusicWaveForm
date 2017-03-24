@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.lang.Math;
 
 
-public class Xshape extends JFrame {
+public class MusicWindow extends JFrame {
 	private MyPanel mP;
 
-	public Xshape()
+	public MusicWindow()
 	{
 		Dimension d = new Dimension(Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
 		mP = new MyPanel(d, Global.BGROUND_COLOR);
@@ -31,8 +31,8 @@ public class Xshape extends JFrame {
 
             @Override
             public void run() {
-                Xshape xs = new Xshape();
-                xs.setVisible(true);
+                MusicWindow mw = new MusicWindow();
+                mw.setVisible(true);
             }
         });  
 	}

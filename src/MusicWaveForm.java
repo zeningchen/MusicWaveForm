@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 
-
+/*Uses Music Reader to read music Data to generate waveform that gets sent to MusicWindow*/
 public class MusicWaveForm {
 	
 	private class ScreenMeasurements
@@ -345,9 +345,9 @@ public class MusicWaveForm {
 		/*Get the next tick buffer*/
 		short [] musicData = getTimeTickBufferPreloaded(mQ);
 		
-		int[] musicData32Bit = convertShortArr2IntArr(musicData);
-		
-		musicData = mAvFlt.filterData(musicData32Bit);
+		/*Comment out filtering function for now until efficient way is used*/
+		//int[] musicData32Bit = convertShortArr2IntArr(musicData);
+		//musicData = mAvFlt.filterData(musicData32Bit);
 		
 		/*Waveform Array*/
 		if(waveFormArray != null)

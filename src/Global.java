@@ -2,15 +2,15 @@ import java.awt.Color;
 
 class Global
 {
-	public static int PRE_BUFFERING_SIZE = 15;
+	public static int PRE_BUFFERING_SIZE = 500;
     public static int TITLE_BAR_WIDTH = 15;
     public static int SCREEN_WIDTH = 900;
     public static int SCREEN_HEIGHT = 700;
     public static int DX = 0;
     public static int DY = 3;
     public static int GRAVITY = 3;
-    public static int TIME_TICK = 50; //in MS
-    public static int SAMPLES_PER_TICK= 5;
+    public static int TIME_TICK = 100; //in MS
+    public static int SAMPLES_PER_TICK= 50;
     public static int TOTAL_TIME_X = 1000; //in MS
     public static float DIAMETER = 30;
     public static float ELASTICITY_C = .90f;
@@ -31,5 +31,6 @@ class Global
     public static int SAMPLE_RATE = 0;
     public static int NUM_CHANNELS = 2;
     public static int MUSIC_READ_SIZE = 1024;
+    public static int MUSIC_READ_DELAY = 1;
 }
 
