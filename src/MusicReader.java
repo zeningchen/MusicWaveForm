@@ -112,8 +112,6 @@ class MusicReader implements Runnable
 		
 	}
 	
-	
-	
 	/*Prebuffer the music a bit*/
 	private void preBufferMusic()
 	{

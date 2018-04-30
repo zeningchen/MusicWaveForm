@@ -10,12 +10,12 @@ import java.lang.Math;
 
 
 public class MusicWindow extends JFrame {
-	private MyPanel mP;
+	private MusicPanel mP;
 
 	public MusicWindow()
 	{
 		Dimension d = new Dimension(Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
-		mP = new MyPanel(d, Global.BGROUND_COLOR);
+		mP = new MusicPanel(d, Global.BGROUND_COLOR);
 		this.add(mP, BorderLayout.CENTER);
 		this.pack();
 		

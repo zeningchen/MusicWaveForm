@@ -16,4 +16,17 @@ public class MusicInfo
 		timeTick = tTick;
 		samplesPerTick = sPerTick;
 	}
+	
+
+	/*Gets the music sample rate*/
+	public float getSampleRate()
+	{
+		return this.sampleRate;
+	}
+	/*Sets the music sample rate*/
+	public void setSampleRate(float sR)
+	{
+		this.sampleRate = sR;
+	}
+	
 }
