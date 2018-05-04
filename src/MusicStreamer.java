@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MusicStreamer {
 	AudioInputStream in;
-	AudioInputStream din;
+	AudioInputStream decoded_in;
 	AudioFormat baseFormat;
 	AudioFormat decodedFormat;
 	DataLine.Info info;

@@ -12,11 +12,9 @@ import java.lang.Math;
 public class MusicWindow extends JFrame {
 	private MusicPanel mP;
 
-	public MusicWindow()
+	public MusicWindow(String s, Dimension d)
 	{
-		Dimension d = new Dimension(Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
-		mP = new MusicPanel(d, Global.BGROUND_COLOR);
-		this.add(mP, BorderLayout.CENTER);
+		super(s);
 		this.pack();
 		
         /*Set the background, size and window change states*/
@@ -26,14 +24,14 @@ public class MusicWindow extends JFrame {
 	}
 	
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                MusicWindow mw = new MusicWindow();
-                mw.setVisible(true);
-            }
-        });  
-	}
+//	public static void main(String[] args) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                MusicWindow mw = new MusicWindow();
+//                mw.setVisible(true);
+//            }
+//        });  
+//	}
 }
