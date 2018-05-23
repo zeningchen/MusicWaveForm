@@ -127,10 +127,8 @@ implements ActionListener{
         File selected = null;
         if(JFileChooser.APPROVE_OPTION == openDiag.showOpenDialog(mWindow)) {
             selected = openDiag.getSelectedFile();
-        	//AudioFileFormat fmt = AudioSystem.getAudioFileFormat(selected);
             audioFile = selected;
             this.playerRef.setAudioFile(audioFile);
-            //audioFormat = fmt.getFormat();
             fileLabel.setText(audioFile.getName());
             playState.pS = PlayState.STOPPED;
         }

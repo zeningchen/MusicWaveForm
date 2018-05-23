@@ -178,6 +178,33 @@ class MusicReader extends SwingWorker<Void, Void>
 		setupMusicFileData(f);
 		this.playerRef = playerRef;
 	}
+	
+    public static float[] window(
+            float[] samples,
+            int svalid,
+            AudioFormat fmt
+        ) {
+            /*
+             * most basic window function
+             * multiply the window against a sine curve, tapers ends
+             * 
+             * nested loops here show a paradigm for processing multi-channel formats
+             * the interleaved samples can be processed "in place"
+             * inner loop processes individual channels using an offset
+             * 
+             */
+            
+            int channels = fmt.getChannels();
+            int slen = svalid / channels;
+            
+            for(int ch = 0, k, i; ch < channels; ch++) {
+                for(i = ch, k = 0; i < svalid; i += channels) {
+                    samples[i] *= Math.sin(Math.PI * k++ / (slen - 1));
+                }
+            }
+            
+            return samples;
+        }
 
 
 
@@ -219,7 +246,7 @@ class MusicReader extends SwingWorker<Void, Void>
                             }
                             
                             samples = unpack(bytes, transfer, samples, bread, mStreamer.decodedFormat);
-//                            samples = window(samples, bread / normalBytes, mStreamer.decodedFormat);
+                            samples = window(samples, bread/bytes.length, mStreamer.decodedFormat);
                             
                            this.playerRef.drawDisplay(samples, bread / bytes_per_sample);
                             

@@ -42,7 +42,7 @@ class MusicScreen implements MusicPlayerRef {
 
 	@Override
 	public void drawDisplay(float[] samples, int svalid) {
-		this.mP.musicDrawMethod(samples);
+		this.mP.musicDrawMethod(samples, svalid);
 		this.mP.repaint();
 	}
 	

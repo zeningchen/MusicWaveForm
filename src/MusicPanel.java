@@ -64,15 +64,13 @@ class MusicPanel extends JPanel
 
 	}
 	
-	public void musicDrawMethod(float[] samples )
+	public void musicDrawMethod(float[] samples, int svalid)
 	{
 		Graphics2D g2d = image.createGraphics();
         
         /* shuffle */
         
-        Path2D.Float current = paths[2];
-        paths[2] = paths[1];
-        paths[1] = paths[0];
+        Path2D.Float current = paths[0];
         
         /* lots of ratios */
         
@@ -88,7 +86,7 @@ class MusicPanel extends JPanel
          */
         
         int i = 0;
-        while(i < channels && i < samples.length) {
+        while(i < channels && i < svalid) {
             avg += samples[i++];
         }
         
@@ -97,8 +95,9 @@ class MusicPanel extends JPanel
         current.reset();
         current.moveTo(0, hd2 - avg * hd2);
         
-        int fvalid = samples.length / channels;
-        for(int ch, frame = 0; i < samples.length; frame++) {
+        int fvalid = svalid / channels;
+        int ch, frame;
+        for(ch=0, frame = 0; i < svalid; frame++) {
             avg = 0f;
             
             /* average the channels for each frame. */
@@ -110,17 +109,17 @@ class MusicPanel extends JPanel
             avg /= channels;
             
             current.lineTo(
-                (float)frame / fvalid * image.getWidth(), hd2 - avg * hd2
+                ((float)frame / (float)fvalid) * image.getWidth(), hd2 - avg * hd2
             );
         }
-        
+        //System.out.format("frame =%d", frame);
         paths[0] = current;
         
         
         synchronized(image) {
             g2d.setBackground(Color.BLACK);
             g2d.clearRect(0, 0, image.getWidth(), image.getHeight());
-            
+            //System.out.format("Image width = %d\n", image.getWidth());
             g2d.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON
@@ -129,12 +128,6 @@ class MusicPanel extends JPanel
                 RenderingHints.KEY_STROKE_CONTROL,
                 RenderingHints.VALUE_STROKE_PURE
             );
-            
-            g2d.setPaint(Color.RED);
-            g2d.draw(paths[2]);
-            
-            g2d.setPaint(Color.CYAN);
-            g2d.draw(paths[1]);
             
             g2d.setPaint(Color.WHITE);
             g2d.draw(paths[0]);
